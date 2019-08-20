@@ -35,7 +35,7 @@ library(igraph) #same
 setwd("yourwd")
 ````
 
-### Downloading the lyrics  with the Genius package
+### 1. Downloading the lyrics  with the Genius package
 
 Getting lyrics from an artist is quite easy in R thanks to the Genius package. I won't get in detail here about how it works, but you can learn more about it [here](https://github.com/josiahparry/genius).
 
@@ -143,7 +143,7 @@ All the code is commented, but these two elements may deserve some extra attenti
 
 * Notice that I'm filtering for songs that appear more than 70 times to get only the most frequent ones, and taking out the "di" and "oh" rows because well, those aren't actually words, right?
 
-````r, 
+````r 
 #Loading fonts
 loadfonts(device = "win")
 
@@ -198,7 +198,7 @@ The analysis performed here uses code inspired from [this section](https://www.t
 
 If this sounds a bit confusing to you, I highly recommend consulting the book linked above - I don't think I can provide a better explanation than what you'll find there.
 
-````{r}
+```` r
 tay_sentiment <- tidy_taylor%>%
   inner_join(get_sentiments("bing"))%>% 
   count(album, track_title, sentiment) %>%
@@ -322,13 +322,13 @@ What can we say from this? Well, our girl does talk about love **a lot**, someth
 
 Some more album-specific words arise if we look closer. "Shake" was obviously an important word for 1989, as were "bad" and "hate" - (am I getting some Bad Blood vibes from here?) But all in all, a lot of words seem to come together towards the diagonal line, which suggests that topics are not that different across albums, after all.
 
-###6. Drawing a network map of Taylor Swift songs
+### 6. Drawing a network map of Taylor Swift songs
 
 We've come a long way until here. Lyrics have been downloaded, data has been cleaned, words have been counted, glitter has been created, and we have even done some sentiment analysis and looked at the correlation between different albums! But what if we wanted to do one last thing, let's say... a network map of how songs are related to each other?
 
 Luckily for us, this is quite simple. I'll start by creating a last data frame, one that takes all songs and applies the `pairwise_cor()` function to all of them by comparing the words they contain. This will return a long df where we'll be able to find every pair of songs and their correlation. It's just two lines of code:
 
-````{r}
+```` r
 tay_cors <- tidy_taylor %>%
   pairwise_cor(track_title, word, sort = TRUE)
 
@@ -342,7 +342,7 @@ We could map this as a huge heatmap (I tried to do that), but with so many eleme
 * The computer draws these king of plots differently every time you run them, so I'd suggest setting a seed if you want to be able to replicate!
 * Once again, it can get tricky with sizes and fitting everything to the plot area. Just try until you find what fits your data first
 
-````{r}
+```` r
 set.seed(123)
 
 tay_cors %>%
